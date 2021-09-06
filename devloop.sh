@@ -1,12 +1,8 @@
 while (true) do
   clear
-  rm storage/*
-  rm storage/**
-  node index.js
-  echo '  storage:'
-  ls -lh storage
-  echo '  purgatory:'
-  ls -lh storage/purgatory
-  #mpv storage/*
+  rm -r storage/*
+  rm -r purgatory/*
+  time node index.js
+  tree
   read VAR
 done
