@@ -9,6 +9,7 @@ async function main(){
   //downloader.downloadVideo('https://www.youtube.com/watch?v=6aQXvbjfAGE');
   //long
   //downloader.downloadVideo('https://www.youtube.com/watch?v=fZhRZIqJy-c&t=10s');
+  console.log(await downloader.listFormats('https://www.youtube.com/watch?v=fZhRZIqJy-c&t=10s'));
   console.log('done:)')
 }
 

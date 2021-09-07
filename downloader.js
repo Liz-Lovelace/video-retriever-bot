@@ -7,10 +7,8 @@ async function safeExec(cmd, args, stdin = ''){
   let child = spawn(cmd, args);
   child.stdin.end(stdin);
   let stdout = '';
-  for await (const data of child.stdout){
+  for await (const data of child.stdout)
     stdout += data;
-    console.log(data);
-  }
   return stdout;
 }
 
@@ -50,4 +48,24 @@ async function downloadVideo(link){
   console.log('done downloading ' + link);
 }
 
-module.exports = { downloadVideo };
+async function listFormats(link){
+  let str = await safeExec('youtube-dl', ['-F', link]);
+  let lines = str.split('\n');
+  lines = lines.slice(3, lines.length-1);
+  let lineProperties = []
+  //console.log(valsReg.exec(lines[0]));
+  for (let i = 0; i < lines.length; i++){
+    let valsReg = /^(\d\d\d?) *(\w*) *(\d*x\d*|\w* \w*) *(.*)$/g;
+    vals = valsReg.exec(lines[i]);
+    lineProperties.push({
+      formatCode: vals[1],
+      extention: vals[2],
+      resolution: vals[3],
+      notes: vals[4].split(', ')
+    });
+  }
+  return lineProperties;
+}
+
+
+module.exports = { downloadVideo, listFormats };
