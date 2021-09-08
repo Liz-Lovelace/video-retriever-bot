@@ -1,0 +1,22 @@
+{
+  "name": "video-retriever-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "downloader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mishanya644/video-retriever-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mishanya644/video-retriever-bot/issues"
+  },
+  "homepage": "https://github.com/mishanya644/video-retriever-bot#readme",
+  "dependencies": {
+    "telegraf": "^4.4.1"
+  }
+}
