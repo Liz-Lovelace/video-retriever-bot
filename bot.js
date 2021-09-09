@@ -18,10 +18,12 @@ async function formatMsg(ctx){
   await fs.promises.writeFile(__dirname + '/user-data/' + ctx.from.id, ctx.message.text, {flag:'w'});
 }
 
-async function getVidFromDir(dirPath){
+async function getMediaFromDir(dirPath){
   let files = await fs.promises.readdir(dirPath);
+  let videoRegex = new RegExp('mp4|webm|mkv|mp3|m4a');
   for (f of files){
-    console.log(f);
+    if(videoRegex.test(f))
+      return f;
   }
 }
 
@@ -30,11 +32,15 @@ async function downloadMsg(ctx){
   let link = await fs.promises.readFile(__dirname + '/user-data/' + ctx.from.id, 'utf8');
   let vidDirPath = await downloader.downloadVideo(link, ctx.message.text);
   await ctx.reply('done :)');
-  console.log(await getVidFromDir(vidDirPath));
+  let vidPath = vidDirPath+'/'+await getMediaFromDir(vidDirPath);
+  //oops! bigger than 50megs
+  ctx.replyWithVideo({
+    source: fs.createReadStream(vidPath)
+  });
 }
 
 bot.on('message', async ctx=>{
-  let numRegex = RegExp('\\d*');
+  let numRegex = /^\d*$/;
   let text = ctx.message.text;
   if (numRegex.test(text))
     downloadMsg(ctx);

@@ -24,11 +24,11 @@ let storagePath = __dirname+'/../storage';
 let purgatoryPath = __dirname + '/../purgatory';
 
 async function downloadVideo(link, format='best'){
-  let downId = require('crypto').createHash('sha1').update(link).digest('base64').replace('/', 's');
+  let downId = require('crypto').createHash('sha1').update(link).digest('base64').replace('/', 's')+format;
   let downPath = purgatoryPath + '/' + downId;
   await fs.promises.mkdir(downPath);
   let args = [
-    '-o', downPath + '/%(title)s (%(resolution)s) %(id)s',
+    '-o', downPath + '/%(title)s (%(resolution)s) %(id)s.%(ext)s',
     '--write-info-json',
     '--write-thumbnail',
     '-f', format,
